@@ -9,6 +9,8 @@
 </head>
 <body>
 
+       
+
     <link rel="stylesheet" href="home.css">
 
     
@@ -35,7 +37,7 @@
         <input autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
         <button>Generate</button>
     </div>
-
+    {{ table|safe }}
 </body>
 <script>
     function resetIfInvalid(el){
