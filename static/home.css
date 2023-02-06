@@ -1,0 +1,29 @@
+
+body {
+    background-color: rgb(67, 78, 82);
+  }
+  
+h1 {
+    color: white;
+    font: Kanit;
+    font-size: 50px;
+    text-align: center;
+    font-size: 5003343434;
+    text-shadow: 1px 1px 2px pink;
+
+  }
+
+h1:hover{
+    font-size:55px;
+    transition: all 150ms;
+}
+  
+p {
+    font-family: Kanit;
+    font-size: 20px;
+}
+
+datalist{
+    font-family: 'Fira Sans', sans-serif;
+}
+

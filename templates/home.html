@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>   
+</head>
+<body>
+
+    <link rel="stylesheet" href="home.css">
+
+    
+    <h1 style="font-family: 'Kanit';">goatstats</h1>
+    
+    <div>
+        <label style="font-family: 'Kanit';" for="suggestions">Choose player 1:</label>
+        <datalist id="suggestions">
+            {% for row in data %}
+            <option value="{{ row['Name'] }}">
+            {% endfor %}
+        </datalist>
+        <input  autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
+    </div>
+    
+    <div>
+        <label style="font-family: 'Kanit';" for="suggestions">Choose player 2:</label>
+     
+        <datalist id="suggestions">
+            {% for row in data %}
+            <option value="{{ row['Name'] }}">
+            {% endfor %}
+        </datalist>
+        <input  autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
+        <button>Generate</button>
+    </div>
+
+</body>
+<script>
+    function resetIfInvalid(el){
+       if (el.value == "")
+           return;
+       var options = el.list.options;
+       for (var i = 0; i< options.length; i++) {
+           if (el.value == options[i].value)
+               return;
+       }
+       el.value = "";
+    }
+    </script>
+</html>
