@@ -1,5 +1,3 @@
-# goatstats
-
 # Goatstats
 This is a project to show that statistics taken out of context can show (almost) anybody as a great football player.
 Have you ever wanted to claim your favourite average player was better than Messi only to be faced with the classic
