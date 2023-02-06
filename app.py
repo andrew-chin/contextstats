@@ -1,11 +1,9 @@
 import csv
 from flask import Flask, render_template, request
-import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import warnings
 import numpy as np
 from math import pi
 from urllib.parse import urlencode
