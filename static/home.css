@@ -1,14 +1,17 @@
+@import url('https://fonts.cdnfonts.com/css/proxima-nova-2');
 
 body {
-    background-color: rgb(67, 78, 82);
+    background-color: #243940;
   }
   
+label{
+  font-family: 'Proxima Nova', sans-serif'
+}
 h1 {
     color: white;
-    font: Kanit;
+    font-family: 'Proxima Nova', sans-serif;
     font-size: 50px;
     text-align: center;
-    font-size: 5003343434;
     text-shadow: 1px 1px 2px pink;
 
   }
@@ -19,11 +22,25 @@ h1:hover{
 }
   
 p {
-    font-family: Kanit;
+    font-family: 'Proxima Nova', sans-serif;
     font-size: 20px;
 }
 
 datalist{
-    font-family: 'Fira Sans', sans-serif;
+  font-family: 'Proxima Nova', sans-serif;
 }
 
+.form{
+  font-family: 'Proxima Nova 800', sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+
+}
+
+.tables{
+  font-family: 'Proxima Nova 800', sans-serif;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+}

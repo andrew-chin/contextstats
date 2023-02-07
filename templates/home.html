@@ -1,42 +1,42 @@
 <!DOCTYPE html>
+
 <html>
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>   
-</head>
+    <head>
+        <title>ContextStats</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    </head>    
+   
 <body>
 
        
 
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="./home.css">
 
     
-    <h1 style="font-family: 'Kanit';">goatstats</h1>
+    <h1>goatstats</h1>
     
-    <form action="/send_data" method="post">
-        <label style="font-family: 'Kanit';" for="suggestions">Choose player 1:</label>
+    <form class = "form" action="/send_data" method="post">
+        <label for="suggestions">CHOOSE PLAYER 1:</label>
         <datalist id="suggestions">
             {% for row in data %}
-            <option value="{{ row['fbref'] }}">
+            <option value="{{ row['Name'] }}">
             {% endfor %}
         </datalist>
         <input name="data1" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
     
-        <label style="font-family: 'Kanit';" for="suggestions">Choose player 2:</label>
+        <label for="suggestions">CHOOSE PLAYER 2:</label>
      
         <datalist id="suggestions">
             {% for row in data %}
-            <option value="{{ row['fbref'] }}">
+            <option value="{{ row['Name'] }}">
             {% endfor %}
         </datalist>
         <input name="data2" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
         <input type="submit" value="Send">
     </form>
-    {{ table1|safe }}
-    {{ table2|safe }}
+    <div class = "tables">
+        {{ fin|safe }}
+    </div>
 </body>
 <script>
     function resetIfInvalid(el){
