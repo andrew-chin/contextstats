@@ -1,5 +1,7 @@
 import csv
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file, Response
+import io
+from matplotlib.pyplot import bar_label
 import pandas as pd
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
@@ -11,8 +13,7 @@ from urllib.parse import urlencode
 
 
 app = Flask(__name__)
-
-
+        
  
 def compare_player_data(x, y):
     result = []

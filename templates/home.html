@@ -13,28 +13,30 @@
     <link rel="stylesheet" href="./home.css">
 
     
-    <h1>goatstats</h1>
+    <h1>contextstats ⚽</h1>
+    <div class = "form">
+        <form action="/send_data" method="post">
+            <label for="suggestions">CHOOSE PLAYER 1:</label>
+            <datalist id="suggestions">
+                {% for row in data %}
+                <option value="{{ row['Name'] }}">
+                {% endfor %}
+            </datalist>
+            <input class = "box" name="data1" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
+            <br>
+            <label for="suggestions">CHOOSE PLAYER 2:</label>
+            <datalist id="suggestions">
+                {% for row in data %}
+                <option value="{{ row['Name'] }}">
+                {% endfor %}
+            </datalist>
+            
+            <input class = "box" name="data2" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
+            <br> <br>
+            <input class = "button" type="submit" value="GENERATE">
+        </form>
+    </div>
     
-    <form class = "form" action="/send_data" method="post">
-        <label for="suggestions">CHOOSE PLAYER 1:</label>
-        <datalist id="suggestions">
-            {% for row in data %}
-            <option value="{{ row['Name'] }}">
-            {% endfor %}
-        </datalist>
-        <input name="data1" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
-        <br>
-        <label for="suggestions">CHOOSE PLAYER 2:</label>
-        <datalist id="suggestions">
-            {% for row in data %}
-            <option value="{{ row['Name'] }}">
-            {% endfor %}
-        </datalist>
-        
-        <input name="data2" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
-        <br>
-        <input class = "button" type="submit" value="Send">
-    </form>
     <br><br>
     <div class = "tables" >
 
