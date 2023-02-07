@@ -23,18 +23,22 @@
             {% endfor %}
         </datalist>
         <input name="data1" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
-    
+        <br>
         <label for="suggestions">CHOOSE PLAYER 2:</label>
-     
         <datalist id="suggestions">
             {% for row in data %}
             <option value="{{ row['Name'] }}">
             {% endfor %}
         </datalist>
+        
         <input name="data2" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
-        <input type="submit" value="Send">
+        <br>
+        <input class = "button" type="submit" value="Send">
     </form>
-    <div class = "tables">
+    <br><br>
+    <div class = "tables" >
+
+
         {{ fin|safe }}
     </div>
 </body>
