@@ -13,10 +13,12 @@ from urllib.parse import urlencode
 
 
 app = Flask(__name__)
-        
+
+
  
 def compare_player_data(x, y):
-    result = []
+    titles = []
+    values = []
     list1 = x.split("\n")
     list2 = y.split("\n")
     for i in range(len(list1)):
@@ -32,17 +34,11 @@ def compare_player_data(x, y):
                 if math.isnan(x_float) or math.isnan(y_float):
                     continue
                 if x_float > y_float:
-                    result.append([x[1], x_float, y_float])
+                    titles.append(x[1])
+                    values.append([x_float, y_float, x[1]])
             except:
                 continue
-    df = pd.DataFrame(result, columns=["Statistic", list1[0], list2[0]])
-    fintable = df.to_html()
-    return fintable
-
-                 
-    df = pd.DataFrame(result, columns=["Statistic", list1[0], list2[0]])
-    fintable = df.to_html()
-    return fintable
+    return [titles, values]
 
 def get_player_data(x):
     table_data = []
@@ -87,6 +83,9 @@ def read_csv(filename):
         return list(reader)
 
 
+@app.route("/index")
+def index():
+    return render_template(index = data)
 
 @app.route("/")
 def home():
@@ -105,10 +104,15 @@ def send_data():
     data2 = request.form['data2']
     data1 = search_csv_fbref(data1)
     data2 = search_csv_fbref(data2)
+    if data1 == None or data2 == None:
+        return 0
     p1 = get_player_data(data1)
     p2 = get_player_data(data2)
     fin = compare_player_data(p1, p2)
-    return render_template("home.html", fin = fin, data = read_csv('players.csv'), table1=get_player_data(data1),table2=get_player_data(data2) )
+    titles = fin[0]
+    values = fin[1]
+    text = "Wow. You weren't wrong,  " + search_csv_name(data1) + " is clearly a way better player than " + search_csv_name(data2) + "!"
+    return render_template("home.html", text = text, titles = titles, values = values, data = read_csv('players.csv'), name1=search_csv_name(data1),name2=search_csv_name(data2) )
 
     
 

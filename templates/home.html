@@ -4,6 +4,7 @@
     <head>
         <title>ContextStats</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     </head>    
    
 <body>
@@ -11,49 +12,182 @@
        
 
     <link rel="stylesheet" href="./home.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     
     <h1>contextstats ⚽</h1>
     <div class = "form">
         <form action="/send_data" method="post">
-            <label for="suggestions">CHOOSE PLAYER 1:</label>
+            <label for="suggestions">I think that</label>
             <datalist id="suggestions">
                 {% for row in data %}
                 <option value="{{ row['Name'] }}">
                 {% endfor %}
             </datalist>
-            <input class = "box" name="data1" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
-            <br>
-            <label for="suggestions">CHOOSE PLAYER 2:</label>
+            <input class = "box" name="data1" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" oninput="checkIfValid(this);" required >
+            <label for="suggestions"> is a way better player than </label>
             <datalist id="suggestions">
                 {% for row in data %}
                 <option value="{{ row['Name'] }}">
                 {% endfor %}
             </datalist>
-            
-            <input class = "box" name="data2" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" required >
+            <input class = "box" name="data2" autoComplete="on" list="suggestions"  onchange="resetIfInvalid(this);" oninput="checkIfValid(this);" required >
             <br> <br>
             <input class = "button" type="submit" value="GENERATE">
+            <input style = "background: grey" class= "button" type="submit" value="CUSTOM" disabled="disabled">
+            <br> <br>
+
+            {{text | safe}}
         </form>
     </div>
+
+    <script>
+        function checkIfValid(input) {
+          let isValid = false;
+          let inputValue = input.value;
+          {% for row in data %}
+            if(inputValue === '{{ row['Name'] }}'){
+                isValid = true;
+            }   
+          {% endfor %}
+          if (!isValid) input.value = '';
+        }
+        </script>
     
     <br><br>
-    <div class = "tables" >
+   
 
-
-        {{ fin|safe }}
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart0" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+        </div>
     </div>
-</body>
-<script>
-    function resetIfInvalid(el){
-       if (el.value == "")
-           return;
-       var options = el.list.options;
-       for (var i = 0; i< options.length; i++) {
-           if (el.value == options[i].value)
-               return;
-       }
-       el.value = "";
-    }
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart4" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart5" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart6" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart7" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart8" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart9" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart10" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart11" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart12" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart13" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart14" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart15" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart16" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart17" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+    <div class="grid-container">
+        <div>
+          <canvas id="myChart18" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+            <canvas id="myChart19" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div>
+          <canvas id="myChart20" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+
+    
+    
+    <script>
+        let index  = 0
+        {%for row in values %}
+            var xValues = ['{{name1}}', '{{name2}}'];
+            var yValues = ['{{row[0]}}', '{{row[1]}}'];
+            var barColors = ["green", "red"];
+        
+            new Chart("myChart" + index, {
+            type: "bar",
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: '{{row[2]}}',
+                    backgroundColor: barColors,
+                    data: yValues
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                        beginAtZero: true
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: '{{row[2]}}' + ' Per 90'
+                },
+                legend: {
+                    display: false
+                }
+            }
+            });
+
+            index+=1;
+        {% endfor %}
+            
+        
+        
     </script>
+    
+
+</body>
+
+
+
+    
+    <footer>
+        <p>Created by Andrew Chin</p>
+        <a href="https://github.com/andrew-chin" class="github"><i class="fa fa-github"></i></a>
+      </footer>
 </html>

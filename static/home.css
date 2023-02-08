@@ -15,6 +15,18 @@ h1 {
     text-shadow: 1px 1px 2px pink;
 
   }
+h2{
+  color: white;
+    font-family: 'Proxima Nova', sans-serif;
+    font-size: 25px;
+    text-align: center;
+}
+footer{
+  color: white;
+    font-family: 'Proxima Nova', sans-serif;
+    font-size: 50px;
+    text-align: center;
+}
 
 h1:hover{
     font-size:55px;
@@ -64,9 +76,10 @@ input[type=submit]{
   transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
   background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
   color: #fff;
+  
 
 }
-input[type=submit]:active{
+input[value="GENERATE"]:active{
   display: inline-block;
   outline: none;
   cursor: pointer;
@@ -87,4 +100,10 @@ input[type=submit]:active{
   font-size: 20px;
   font-weight: bolder;
   text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 }
