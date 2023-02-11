@@ -125,12 +125,14 @@ def send_data():
         name1 = find_name(data1)
     else:
          data1 = search_csv_fbref(data1)
+         name1 = search_csv_name(data1)
     if(is_valid_fbref_url(data2)):
         data2 = data2
         url2 = 1
         name2 = find_name(data2)
     else:
         data2 = search_csv_fbref(data2)
+        name2 = search_csv_name(data2)
         
  
     p1 = get_player_data(data1)
@@ -148,7 +150,7 @@ def send_data():
     if(url1 == 1 and url2 == 0):
         text = "Wow. You weren't wrong,  " + name1 + " is clearly a way better player than " + search_csv_name(data2) + "!"
     
-    return render_template("home.html", rows = rows, text = text, titles = titles, values = values, data = read_csv('players.csv'), name1=search_csv_name(data1),name2=search_csv_name(data2) )
+    return render_template("home.html", rows = rows, text = text, titles = titles, values = values, data = read_csv('players.csv'), name1=name1,name2=name2 )
 
     
 
