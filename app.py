@@ -1,6 +1,7 @@
 import csv
 from flask import Flask, render_template, request, send_file, Response
 import io
+import re
 from matplotlib.pyplot import bar_label
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -14,7 +15,20 @@ from urllib.parse import urlencode
 
 app = Flask(__name__)
 
+def find_name(url):
+    splits = url.split('/')
 
+    name = splits[-1].replace("-Scouting-Report", "")
+
+    full_name = name.replace("-", " ")
+
+    return(full_name)
+
+def is_valid_fbref_url(url):
+    regex = re.compile(
+        r'^https://fbref.com/en/players/[a-zA-Z0-9]+/scout/365_m1/[a-zA-Z0-9-]+-Scouting-Report$')
+
+    return re.match(regex, url) is not None
  
 def compare_player_data(x, y):
     titles = []
@@ -43,7 +57,6 @@ def compare_player_data(x, y):
 def get_player_data(x):
     table_data = []
     df = pd.read_html(x, flavor='html5lib')
-    table_data.append(search_csv_name(x))
     for idx, table in enumerate(df):
         if table.shape[0] >= 110:
             table_data.append(table.to_csv())
@@ -100,19 +113,42 @@ def submit():
 
 @app.route('/send_data', methods=['POST'])
 def send_data():
+        
     data1 = request.form['data1']
     data2 = request.form['data2']
-    data1 = search_csv_fbref(data1)
-    data2 = search_csv_fbref(data2)
-    if data1 == None or data2 == None:
-        return 0
+    url1 = 0
+    url2 = 0
+
+    if(is_valid_fbref_url(data1)):
+        data1 = data1
+        url1 = 1
+        name1 = find_name(data1)
+    else:
+         data1 = search_csv_fbref(data1)
+    if(is_valid_fbref_url(data2)):
+        data2 = data2
+        url2 = 1
+        name2 = find_name(data2)
+    else:
+        data2 = search_csv_fbref(data2)
+        
+ 
     p1 = get_player_data(data1)
     p2 = get_player_data(data2)
     fin = compare_player_data(p1, p2)
     titles = fin[0]
     values = fin[1]
-    text = "Wow. You weren't wrong,  " + search_csv_name(data1) + " is clearly a way better player than " + search_csv_name(data2) + "!"
-    return render_template("home.html", text = text, titles = titles, values = values, data = read_csv('players.csv'), name1=search_csv_name(data1),name2=search_csv_name(data2) )
+    rows = len(fin[1])
+    if(url1 == 1 and url2 == 1):
+        text = "Wow. You weren't wrong,  " + name1 + " is clearly a way better player than " + name2 + "!"
+    if(url1 == 0 and url2 == 0):
+        text = "Wow. You weren't wrong,  " + search_csv_name(data1) + " is clearly a way better player than " + search_csv_name(data2) + "!"
+    if(url1 == 0 and url2 == 1):
+        text = "Wow. You weren't wrong,  " + search_csv_name(data1) + " is clearly a way better player than " + name2 + "!"
+    if(url1 == 1 and url2 == 0):
+        text = "Wow. You weren't wrong,  " + name1 + " is clearly a way better player than " + search_csv_name(data2) + "!"
+    
+    return render_template("home.html", rows = rows, text = text, titles = titles, values = values, data = read_csv('players.csv'), name1=search_csv_name(data1),name2=search_csv_name(data2) )
 
     
 
